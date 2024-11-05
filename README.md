@@ -13,3 +13,11 @@ The counteract rules are probably the most confusing rules in Pathfinder 2e. Thi
 - cd into `counteract_calculator`
 - run `npm i`
 - run `npm run dev`
+
+## Deploying on surge
+
+- run `npm run build`
+- once the build completes, cd in to `dist`
+- run `mv index.html 200.html`. this is a weird quirk of surge where it doesn't look for `index.html`
+- run `surge`
+- if it's the first time deploying, use whatever the suggested url is. If not, you can update to whatever it previously generated for you. 
