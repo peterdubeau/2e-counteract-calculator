@@ -1,8 +1,15 @@
-# React + Vite
+# Pathfinder 2e Counteract Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The counteract rules are probably the most confusing rules in Pathfinder 2e. This app was created to guide players on determining the success or failure of a counteract check. The tool will also explain in clear language how all of the calculations were made.  
 
-Currently, two official plugins are available:
+## Counteract Rules and Inspiration
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- The rules for Counteracting on [Archives of Nethys](https://2e.aonprd.com/Rules.aspx?ID=3280&Redirected=1)
+- The [reddit post](https://www.reddit.com/r/Pathfinder2e/comments/13pyaky/a_visual_guide_to_counteract_checks/) that made the counteract rules click for me.
+
+## Setup
+
+- clone this repo
+- cd into `counteract_calculator`
+- run `npm i`
+- run `npm run dev`
