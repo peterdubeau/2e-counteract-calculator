@@ -1,5 +1,3 @@
-
-
 export type CounteractResultsProps = {  
   counteractRoll: number,
   counteractDC: number,
@@ -7,7 +5,9 @@ export type CounteractResultsProps = {
   successRequirements: SuccessLevelDetail,
   setCounteractResult: any,
   counteractResult: boolean,
-  disableCheckButton: boolean
+  disableCheckButton: boolean,
+  showResults: boolean,
+  setShowResults: any
 }
 
 export type ExplanationProps = {

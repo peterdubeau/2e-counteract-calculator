@@ -10,44 +10,87 @@ export default function CounteractResults({
   setCounteractResult,
   counteractResult,
   disableCheckButton,
+  showResults,
+  setShowResults,
 }: CounteractResultsProps) {
-  function handleResult() {
+  function handleResult(crit?: boolean, isNatural20?: boolean) {
+    const { critSuccess, success, failure, impossible } = successLevel;
+    const counteractAttemptTotal = calculateCounteractRoll(crit, isNatural20);
+    setShowResults(true);
     switch (successRequirements.text) {
-      case successLevel.success.text:
-        if (counteractRoll >= counteractDC) {
+      case success.text:
+        if (counteractAttemptTotal >= counteractDC) {
           setCounteractResult(true);
         } else {
           setCounteractResult(false);
         }
         break;
 
-      case successLevel.critSuccess.text:
-        if (counteractRoll >= counteractDC + 10) {
-          setCounteractResult(true);
-        } else {
-          setCounteractResult(false);
-        }
-        break;
-      case successLevel.failure.text:
-        if (counteractRoll >= counteractDC - 10) {
+      case critSuccess.text:
+        if (counteractAttemptTotal >= counteractDC + 10) {
           setCounteractResult(true);
         } else {
           setCounteractResult(false);
         }
         break;
 
-      case successLevel.impossible.text:
+      case failure.text:
+        if (counteractAttemptTotal >= counteractDC - 10) {
+          setCounteractResult(true);
+        } else {
+          setCounteractResult(false);
+        }
+        break;
+
+      case impossible.text:
         setCounteractResult(false);
+        break;
     }
+  }
+
+  function calculateCounteractRoll(
+    crit?: boolean,
+    isNatural20?: boolean
+  ): number {
+    let rollModifier: number = 0;
+
+    if (crit) {
+      rollModifier = isNatural20 ? 10 : -10;
+    }
+
+    return counteractRoll + rollModifier;
   }
 
   return (
     <>
-      <button onClick={() => handleResult()} disabled={disableCheckButton}>
-        Did the counteract work???
+      <button
+        onClick={() => handleResult(true, true)}
+        disabled={disableCheckButton}
+        style={{ color: "green" }}
+      >
+        Natural 20
       </button>
-      {}
-      {counteractResult ? "Success!" : "Failure"}
+
+      <button onClick={() => handleResult()} disabled={disableCheckButton}>
+        Check Counteract Result
+      </button>
+
+      <button
+        onClick={() => handleResult(true, false)}
+        disabled={disableCheckButton}
+        style={{ color: "red" }}
+      >
+        Natural 1
+      </button>
+      {showResults ? (
+        counteractResult ? (
+          <p style={{ color: "green" }}>Success!</p>
+        ) : (
+          <p style={{ color: "red" }}>Failure</p>
+        )
+      ) : (
+        ""
+      )}
     </>
   );
 }

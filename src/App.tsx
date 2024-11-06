@@ -4,6 +4,7 @@ import ItemLevelForm from "./components/itemLevelForm";
 import SuccessRequirementMessage from "./components/successRequirementMessage";
 import CounteractResults from "./components/counteractResults";
 import { SuccessLevel, SuccessLevelDetail, UseItemLevel } from "./types/index";
+import Explanation from './components/explanation';
 
 export default function App() {
   const [counteractAttemptLevel, setCounteractAttemptLevel] =
@@ -17,6 +18,7 @@ export default function App() {
     target: false,
     attempt: false,
   });
+  const [showResults, setShowResults] = useState<boolean>(false)
 
   const successLevel: SuccessLevel = useMemo(
     () => ({
@@ -57,6 +59,7 @@ export default function App() {
   );
 
   useEffect(() => {
+    setShowResults(false)
     if (counteractAttemptLevel === 0 || counteractTargetLevel === 0) {
       setSuccessRequirements(successLevel.none);
     } else {
@@ -67,6 +70,8 @@ export default function App() {
     counteractTargetLevel,
     calculateRequiredSuccess,
     successLevel.none,
+    counteractDC,
+    counteractRoll
   ]);
 
   const toggleUseItemLevelTarget = useCallback((val: boolean) => {
@@ -142,7 +147,14 @@ export default function App() {
         setCounteractResult={setCounteractResult}
         counteractResult={counteractResult}
         disableCheckButton={disableCheckButton}
+        showResults={showResults}
+        setShowResults={setShowResults}
       />
+
+      {/* <Explanation 
+        color="red"
+        text="hello!"
+      /> */}
     </div>
   );
 }
