@@ -1,17 +1,22 @@
+import React from "react";
 import { useState, useEffect, useCallback, useMemo } from "react";
-
 import ItemLevelForm from "./components/itemLevelForm";
 import SuccessRequirementMessage from "./components/successRequirementMessage";
 import CounteractResults from "./components/counteractResults";
-import React from "react";
-import { SuccessLevel, SuccessLevelDetail } from './types/index'
+import { SuccessLevel, SuccessLevelDetail, UseItemLevel } from "./types/index";
+
 export default function App() {
-  const [counteractAttemptLevel, setCounteractAttemptLevel] = useState<number>(1);
+  const [counteractAttemptLevel, setCounteractAttemptLevel] =
+    useState<number>(1);
   const [counteractTargetLevel, setCounteractTargetLevel] = useState<number>(1);
   const [counteractDC, setCounteractDC] = useState<number>(0);
   const [counteractRoll, setCounteractRoll] = useState<number>(0);
   const [counteractResult, setCounteractResult] = useState<boolean>(false);
   const [disableCheckButton, setDisableCheckButton] = useState<boolean>(false);
+  const [useItemLevel, setUseItemLevel] = useState<UseItemLevel>({
+    target: false,
+    attempt: false,
+  });
 
   const successLevel: SuccessLevel = useMemo(
     () => ({
@@ -27,29 +32,28 @@ export default function App() {
     []
   );
 
-  const [successRequirements, setSuccessRequirements] = useState<SuccessLevelDetail>(
-    successLevel.critSuccess
-  );
+  const [successRequirements, setSuccessRequirements] =
+    useState<SuccessLevelDetail>(successLevel.critSuccess);
 
   const calculateRequiredSuccess = useCallback(
-    (attemptLevel: number, targetLevel: number) => {
+    (baseAttemptLevel: number, baseTargetLevel: number) => {
+      const { targetLevel, attemptLevel } = calculateEffectiveLevel(
+        baseAttemptLevel,
+        baseTargetLevel
+      );
       setDisableCheckButton(false);
       const levelDifference = targetLevel - attemptLevel;
-      if (levelDifference < 0) {
-        setSuccessRequirements(successLevel.failure);
-      }
-      if (levelDifference === 0 || levelDifference === 1) {
+      if (levelDifference < 0) setSuccessRequirements(successLevel.failure);
+      if (levelDifference === 0 || levelDifference === 1)
         setSuccessRequirements(successLevel.success);
-      }
-      if (levelDifference === 2 || levelDifference === 3) {
+      if (levelDifference === 2 || levelDifference === 3)
         setSuccessRequirements(successLevel.critSuccess);
-      }
       if (levelDifference >= 4) {
         setSuccessRequirements(successLevel.impossible);
         setDisableCheckButton(true);
       }
     },
-    [successLevel]
+    [useItemLevel, successLevel]
   );
 
   useEffect(() => {
@@ -65,6 +69,28 @@ export default function App() {
     successLevel.none,
   ]);
 
+  const toggleUseItemLevelTarget = useCallback((val: boolean) => {
+    setUseItemLevel((prev: UseItemLevel) => ({ ...prev, target: val }));
+  }, []);
+
+  const toggleUseItemLevelAttempt = useCallback((val: boolean) => {
+    setUseItemLevel((prev: UseItemLevel) => ({ ...prev, attempt: val }));
+  }, []);
+
+  function calculateEffectiveLevel(
+    baseAttemptLevel: number,
+    baseTargetLevel: number
+  ) {
+    const attemptLevel = useItemLevel.attempt
+      ? baseAttemptLevel / 2
+      : baseAttemptLevel;
+    const targetLevel = useItemLevel.target
+      ? baseTargetLevel / 2
+      : baseTargetLevel;
+
+    return { targetLevel, attemptLevel };
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="message flex justify-center mb-4">
@@ -79,13 +105,17 @@ export default function App() {
             value={counteractAttemptLevel}
             setValue={setCounteractAttemptLevel}
             label="Counteract Spell Rank"
-            options={{ levelOrRank: true }}
+            levelOrRank={true}
+            useItemLevel={useItemLevel.attempt}
+            setUseItemLevel={toggleUseItemLevelAttempt}
           />
           <ItemLevelForm
             value={counteractTargetLevel}
             setValue={setCounteractTargetLevel}
             label="Counteract Target Spell Rank"
-            options={{ levelOrRank: true }}
+            levelOrRank={true}
+            useItemLevel={useItemLevel.target}
+            setUseItemLevel={toggleUseItemLevelTarget}
           />
         </div>
       </div>

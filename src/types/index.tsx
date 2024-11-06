@@ -19,7 +19,14 @@ export type ItemLevelProps = {
   label: string,
   value: number,
   setValue: any, // this is actually a hook
-  options?: any
+  levelOrRank?: boolean
+  useItemLevel?: boolean
+  setUseItemLevel?: any
+}
+
+export type UseItemLevel = {
+  target: boolean,
+  attempt: boolean
 }
 
 export type SuccessLevel = {
