@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+import React from "react";
+import { CounteractResultsProps } from "../types";
+
 export default function CounteractResults({
   counteractRoll,
   counteractDC,
@@ -7,7 +10,7 @@ export default function CounteractResults({
   setCounteractResult,
   counteractResult,
   disableCheckButton,
-}) {
+}: CounteractResultsProps) {
   function handleResult() {
     switch (successRequirements.text) {
       case successLevel.success.text:
@@ -43,6 +46,7 @@ export default function CounteractResults({
       <button onClick={() => handleResult()} disabled={disableCheckButton}>
         Did the counteract work???
       </button>
+      {}
       {counteractResult ? "Success!" : "Failure"}
     </>
   );

@@ -1,18 +1,26 @@
 /* eslint-disable react/prop-types */
+import React, { SyntheticEvent } from "react";
 import { useState } from "react";
-export default function Form({ label, value, setValue, options }) {
+import { ItemLevelProps } from "../types";
+
+export default function ItemLevelForm({
+  label,
+  value,
+  setValue,
+  options,
+}: ItemLevelProps) {
   const [isChecked, setIsChecked] = useState(false);
 
-  function parseValue(val) {
-    const dcValue = parseInt(val)
+  function parseValue(val: string) {
+    const dcValue = parseInt(val);
     if (!dcValue) {
       return setValue(0);
     }
-    return setValue(dcValue)
+    return setValue(dcValue);
 
     // none of this works. i'm getting really weird behavior where the numbers just start
-    // multiplying out of control. I'm assuming I need to change the logic, so we're 
-    // only halving the value when we click the check results button. 
+    // multiplying out of control. I'm assuming I need to change the logic, so we're
+    // only halving the value when we click the check results button.
 
     // if (!isChecked) {
     //   return setValue(dcValue);
@@ -21,7 +29,7 @@ export default function Form({ label, value, setValue, options }) {
     // return setValue(itemLevelValue);
   }
 
-  function handleCheckbox(e) {
+  function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>): void {
     const checked = e.target.checked;
     setIsChecked(checked);
   }

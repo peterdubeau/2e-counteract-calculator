@@ -3,57 +3,67 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import ItemLevelForm from "./components/itemLevelForm";
 import SuccessRequirementMessage from "./components/successRequirementMessage";
 import CounteractResults from "./components/counteractResults";
-
+import React from "react";
+import { SuccessLevel, SuccessLevelDetail } from './types/index'
 export default function App() {
-  const [counteractAttemptLevel, setCounteractAttemptLevel] = useState(1);
-  const [counteractTargetLevel, setCounteractTargetLevel] = useState(1);
-  const [counteractDC, setCounteractDC] = useState(0);
-  const [counteractRoll, setCounteractRoll] = useState(0);
-  const [counteractResult, setCounteractResult] = useState(false);
-  const [disableCheckButton, setDisableCheckButton] = useState(false)
+  const [counteractAttemptLevel, setCounteractAttemptLevel] = useState<number>(1);
+  const [counteractTargetLevel, setCounteractTargetLevel] = useState<number>(1);
+  const [counteractDC, setCounteractDC] = useState<number>(0);
+  const [counteractRoll, setCounteractRoll] = useState<number>(0);
+  const [counteractResult, setCounteractResult] = useState<boolean>(false);
+  const [disableCheckButton, setDisableCheckButton] = useState<boolean>(false);
 
-  const successLevel = useMemo(() => ({
-    impossible: {
-      text: "Effect cannot be counteracted",
-      colorValue: "darkred",
-    },
-    critSuccess: { text: "Critical Success", colorValue: "red" },
-    success: { text: "Success", colorValue: "green" },
-    failure: { text: "Failure", colorValue: "lightgreen" },
-    none: { text: "Please enter levels", olorValue: "red" },
-  }),[]);  
-  
-  const [successRequirements, setSuccessRequirements] = useState(
-    successLevel.critSuccess.text
+  const successLevel: SuccessLevel = useMemo(
+    () => ({
+      impossible: {
+        text: "Effect cannot be counteracted",
+        colorValue: "darkred",
+      },
+      critSuccess: { text: "Critical Success", colorValue: "red" },
+      success: { text: "Success", colorValue: "green" },
+      failure: { text: "Failure", colorValue: "lightgreen" },
+      none: { text: "Please enter levels", colorValue: "red" },
+    }),
+    []
   );
-  
-  const calculateRequiredSuccess = useCallback((attemptLevel, targetLevel) => {
-    setDisableCheckButton(false);
-    const levelDifference = targetLevel - attemptLevel;
-    if (levelDifference < 0) {
-      setSuccessRequirements(successLevel.failure);
-    }
-    if (levelDifference === 0 || levelDifference === 1) {
-      setSuccessRequirements(successLevel.success);
-    }
-    if (levelDifference === 2 || levelDifference === 3) {
-      setSuccessRequirements(successLevel.critSuccess);
-    }
-    if (levelDifference >= 4) {
-      setSuccessRequirements(successLevel.impossible);
-      setDisableCheckButton(true);
-    }
-  }, [successLevel]);
-  
+
+  const [successRequirements, setSuccessRequirements] = useState<SuccessLevelDetail>(
+    successLevel.critSuccess
+  );
+
+  const calculateRequiredSuccess = useCallback(
+    (attemptLevel: number, targetLevel: number) => {
+      setDisableCheckButton(false);
+      const levelDifference = targetLevel - attemptLevel;
+      if (levelDifference < 0) {
+        setSuccessRequirements(successLevel.failure);
+      }
+      if (levelDifference === 0 || levelDifference === 1) {
+        setSuccessRequirements(successLevel.success);
+      }
+      if (levelDifference === 2 || levelDifference === 3) {
+        setSuccessRequirements(successLevel.critSuccess);
+      }
+      if (levelDifference >= 4) {
+        setSuccessRequirements(successLevel.impossible);
+        setDisableCheckButton(true);
+      }
+    },
+    [successLevel]
+  );
+
   useEffect(() => {
     if (counteractAttemptLevel === 0 || counteractTargetLevel === 0) {
       setSuccessRequirements(successLevel.none);
     } else {
       calculateRequiredSuccess(counteractAttemptLevel, counteractTargetLevel);
     }
-  }, [counteractAttemptLevel, counteractTargetLevel, calculateRequiredSuccess, successLevel.none]);
-  
-
+  }, [
+    counteractAttemptLevel,
+    counteractTargetLevel,
+    calculateRequiredSuccess,
+    successLevel.none,
+  ]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -94,11 +104,9 @@ export default function App() {
         </div>
       </div>
       <br />
-      <CounteractResults 
+      <CounteractResults
         counteractRoll={counteractRoll}
         counteractDC={counteractDC}
-        counteractAttemptLevel={counteractAttemptLevel}
-        counteractTargetLevel={counteractTargetLevel}
         successRequirements={successRequirements}
         successLevel={successLevel}
         setCounteractResult={setCounteractResult}
