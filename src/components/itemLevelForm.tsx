@@ -1,6 +1,13 @@
 import React from "react";
-import { useState } from "react";
-import { ItemLevelProps } from "../types";
+
+type ItemLevelProps = {
+  label: string;
+  value: number;
+  setValue: any; // this is actually a hook
+  levelOrRank?: boolean;
+  useItemLevel?: boolean;
+  setUseItemLevel?: any;
+};
 
 export default function ItemLevelForm({
   label,
@@ -8,16 +15,14 @@ export default function ItemLevelForm({
   setValue,
   levelOrRank,
   useItemLevel,
-  setUseItemLevel
+  setUseItemLevel,
 }: ItemLevelProps) {
-
   function parseValue(val: string) {
     const dcValue = parseInt(val);
     if (!dcValue) {
       setValue(0);
-    }
-    else {
-      setValue(dcValue)
+    } else {
+      setValue(dcValue);
     }
   }
 

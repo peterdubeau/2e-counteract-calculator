@@ -6,6 +6,19 @@ import CounteractResults from "./components/counteractResults";
 import { SuccessLevel, SuccessLevelDetail, UseItemLevel } from "./types/index";
 import Explanation from './components/explanation';
 
+
+const successLevel: SuccessLevel = {
+    impossible: {
+      text: "Effect cannot be counteracted",
+      colorValue: "darkred",
+    },
+    critSuccess: { text: "Critical Success", colorValue: "red" },
+    success: { text: "Success", colorValue: "green" },
+    failure: { text: "Failure", colorValue: "lightgreen" },
+    none: { text: "Please enter levels", colorValue: "red" },
+  }
+
+
 export default function App() {
   const [counteractAttemptLevel, setCounteractAttemptLevel] =
     useState<number>(1);
@@ -19,20 +32,6 @@ export default function App() {
     attempt: false,
   });
   const [showResults, setShowResults] = useState<boolean>(false)
-
-  const successLevel: SuccessLevel = useMemo(
-    () => ({
-      impossible: {
-        text: "Effect cannot be counteracted",
-        colorValue: "darkred",
-      },
-      critSuccess: { text: "Critical Success", colorValue: "red" },
-      success: { text: "Success", colorValue: "green" },
-      failure: { text: "Failure", colorValue: "lightgreen" },
-      none: { text: "Please enter levels", colorValue: "red" },
-    }),
-    []
-  );
 
   const [successRequirements, setSuccessRequirements] =
     useState<SuccessLevelDetail>(successLevel.critSuccess);
@@ -74,13 +73,13 @@ export default function App() {
     counteractRoll
   ]);
 
-  const toggleUseItemLevelTarget = useCallback((val: boolean) => {
+  const toggleUseItemLevelTarget = (val: boolean) => {
     setUseItemLevel((prev: UseItemLevel) => ({ ...prev, target: val }));
-  }, []);
+  };
 
-  const toggleUseItemLevelAttempt = useCallback((val: boolean) => {
+  const toggleUseItemLevelAttempt = (val: boolean) => {
     setUseItemLevel((prev: UseItemLevel) => ({ ...prev, attempt: val }));
-  }, []);
+  };
 
   function calculateEffectiveLevel(
     baseAttemptLevel: number,

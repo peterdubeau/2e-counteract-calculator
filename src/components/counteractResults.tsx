@@ -1,6 +1,18 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { CounteractResultsProps } from "../types";
+import { SuccessLevel, SuccessLevelDetail } from "../types/index";
+
+type CounteractResultsProps = {
+  counteractRoll: number;
+  counteractDC: number;
+  successLevel: SuccessLevel;
+  successRequirements: SuccessLevelDetail;
+  setCounteractResult: any;
+  counteractResult: boolean;
+  disableCheckButton: boolean;
+  showResults: boolean;
+  setShowResults: any;
+};
 
 export default function CounteractResults({
   counteractRoll,
