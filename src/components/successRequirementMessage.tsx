@@ -10,7 +10,7 @@ export default function SuccessRequirementMessage({
   text,
 }: SuccessRequirementMessageProps) {
   return (
-    <div className="flex justify-center flex-col items-center">
+    <div className>
       <p>Minimum Required Result:</p>
       <p style={{ color: color }}>{text}</p>
     </div>

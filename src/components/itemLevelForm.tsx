@@ -17,6 +17,7 @@ export default function ItemLevelForm({
   useItemLevel,
   setUseItemLevel,
 }: ItemLevelProps) {
+
   function parseValue(val: string) {
     const dcValue = parseInt(val);
     if (!dcValue) {

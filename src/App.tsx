@@ -96,15 +96,15 @@ export default function App() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="message flex justify-center mb-4">
+    <div className>
+      <div className>
         <SuccessRequirementMessage
           text={successRequirements.text}
           color={successRequirements.colorValue}
         />
       </div>
-      <div className="levels w-full flex justify-center mb-4">
-        <div className="grid grid-cols-2 gap-4">
+      <div className>
+        <div className>
           <ItemLevelForm
             value={counteractAttemptLevel}
             setValue={setCounteractAttemptLevel}
@@ -123,8 +123,8 @@ export default function App() {
           />
         </div>
       </div>
-      <div className="roll-and-dc w-full flex justify-center">
-        <div className="grid grid-cols-2 gap-4">
+      <div className>
+        <div className>
           <ItemLevelForm
             value={counteractDC}
             setValue={setCounteractDC}
