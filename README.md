@@ -20,13 +20,13 @@ The counteract rules are probably the most confusing rules in Pathfinder 2e. Thi
 - run `npm run deploy` 
 - follow the surge prompts. 
 - Use the randomly generated domain or enter a custom domain.
-- If you want to speed this process up, in your root directory create a file named `CNAME` and add your new surge url.
+- If you want to speed this process up in the future, directory create a file named `CNAME` in your root directory, and add your new surge url.
 - From now on, running the deploy script will automatically populate the surge url.
 
 ## The slightly more complicated way
 
 - run `npm run build`
 - once the build completes, cd in to `dist`
-- run `mv index.html 200.html`. this is a weird quirk of surge where it doesn't look for `index.html`. You can find more info on this in the [surge docs]()
+- run `mv index.html 200.html`. this is a weird quirk of surge where it doesn't look for `index.html`. You can find more info on this in the [surge docs](https://surge.sh/help/adding-a-200-page-for-client-side-routing)
 - run `surge`
-- 
+- follow the prompts
