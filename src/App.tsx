@@ -86,12 +86,11 @@ export default function App() {
     baseTargetLevel: number
   ) {
     const attemptLevel = useItemLevel.attempt
-      ? baseAttemptLevel / 2
+      ? Math.ceil(baseAttemptLevel / 2)
       : baseAttemptLevel;
     const targetLevel = useItemLevel.target
-      ? baseTargetLevel / 2
+      ? Math.ceil(baseTargetLevel / 2)
       : baseTargetLevel;
-
     return { targetLevel, attemptLevel };
   }
 
@@ -108,7 +107,7 @@ export default function App() {
           <ItemLevelForm
             value={counteractAttemptLevel}
             setValue={setCounteractAttemptLevel}
-            label="Counteract Spell Rank"
+            label="Counteract"
             levelOrRank={true}
             useItemLevel={useItemLevel.attempt}
             setUseItemLevel={toggleUseItemLevelAttempt}
@@ -116,7 +115,7 @@ export default function App() {
           <ItemLevelForm
             value={counteractTargetLevel}
             setValue={setCounteractTargetLevel}
-            label="Counteract Target Spell Rank"
+            label="Counteract Target"
             levelOrRank={true}
             useItemLevel={useItemLevel.target}
             setUseItemLevel={toggleUseItemLevelTarget}
