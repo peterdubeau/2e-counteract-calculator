@@ -33,7 +33,7 @@ export default function ItemLevelForm({
   return (
     <div className="inline-grid grid-cols-1 gap-10">
       <div>
-        <p>{label}</p>
+        <p>{label} {useItemLevel ? "Item Level" : "Spell Rank" }</p>
         <input
           type="text"
           value={value}

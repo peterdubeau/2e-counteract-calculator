@@ -108,7 +108,7 @@ export default function App() {
           <ItemLevelForm
             value={counteractAttemptLevel}
             setValue={setCounteractAttemptLevel}
-            label="Counteract Spell Rank"
+            label="Counteract"
             levelOrRank={true}
             useItemLevel={useItemLevel.attempt}
             setUseItemLevel={toggleUseItemLevelAttempt}
@@ -116,7 +116,7 @@ export default function App() {
           <ItemLevelForm
             value={counteractTargetLevel}
             setValue={setCounteractTargetLevel}
-            label="Counteract Target Spell Rank"
+            label="Counteract Target"
             levelOrRank={true}
             useItemLevel={useItemLevel.target}
             setUseItemLevel={toggleUseItemLevelTarget}
