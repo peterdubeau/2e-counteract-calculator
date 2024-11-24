@@ -86,12 +86,12 @@ export default function App() {
     baseTargetLevel: number
   ) {
     const attemptLevel = useItemLevel.attempt
-      ? baseAttemptLevel / 2
+      ? Math.ceil(baseAttemptLevel / 2)
       : baseAttemptLevel;
     const targetLevel = useItemLevel.target
-      ? baseTargetLevel / 2
+      ? Math.ceil(baseTargetLevel / 2)
       : baseTargetLevel;
-
+    console.log({targetLevel, attemptLevel})
     return { targetLevel, attemptLevel };
   }
 
