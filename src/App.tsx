@@ -5,6 +5,7 @@ import SuccessRequirementMessage from "./components/successRequirementMessage";
 import CounteractResults from "./components/counteractResults";
 import { SuccessLevel, SuccessLevelDetail, UseItemLevel } from "./types/index";
 import Explanation from './components/explanation';
+import { Button } from "./components/ui/button";
 
 
 const successLevel: SuccessLevel = {
@@ -32,6 +33,7 @@ export default function App() {
     attempt: false,
   });
   const [showResults, setShowResults] = useState<boolean>(false)
+  const [showHelp, setShowHelp] = useState<boolean>(false)
 
   const [successRequirements, setSuccessRequirements] =
     useState<SuccessLevelDetail>(successLevel.critSuccess);
@@ -99,9 +101,56 @@ export default function App() {
       <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 space-y-6 sm:space-y-8">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-primary mb-2">Counteract Calculator</h1>
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <h1 className="text-3xl font-bold text-primary">Counteract Calculator</h1>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowHelp(!showHelp)}
+              className="text-sm"
+            >
+              {showHelp ? "Hide Help" : "Help"}
+            </Button>
+          </div>
           <p className="text-muted-foreground">Pathfinder 2e Counteract Check</p>
         </div>
+
+        {/* Help Section */}
+        {showHelp && (
+          <div className="bg-card border border-border rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4">How to Use</h2>
+            <div className="space-y-4 text-sm">
+              <div>
+                <h3 className="font-semibold text-foreground mb-2">1. Enter Your Levels</h3>
+                <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                  <li><strong>Counteract Level:</strong> The spell rank or level of your counteract attempt</li>
+                  <li><strong>Counteract Target Level:</strong> The spell rank or level of the effect you're counteracting</li>
+                  <li><strong>Item Level Toggle:</strong> Enable if using an item (uses half the item's level, rounded up)</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold text-foreground mb-2">2. Enter Your Roll</h3>
+                <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                  <li><strong>Counteract DC:</strong> The difficulty class to beat</li>
+                  <li><strong>Counteract Roll:</strong> Your d20 roll result</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold text-foreground mb-2">3. Check Your Result</h3>
+                <p className="text-muted-foreground mb-2">The app automatically calculates what success level you need based on the level difference:</p>
+                <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                  <li><strong>Failure</strong> (target 1+ levels lower): Roll against DC-10</li>
+                  <li><strong>Success</strong> (equal levels or target 1 level higher): Roll against DC</li>
+                  <li><strong>Critical Success</strong> (target 2-3 levels higher): Roll against DC+10</li>
+                  <li><strong>Impossible</strong> (target 4+ levels higher): Cannot be counteracted</li>
+                </ul>
+                <p className="text-muted-foreground mt-2">Click the appropriate button: <strong>"Check Result"</strong> for normal rolls, <strong>"Natural 20"</strong> for critical success, or <strong>"Natural 1"</strong> for critical failure.</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Success Requirement */}
         <div className="bg-card border border-border rounded-lg p-4">

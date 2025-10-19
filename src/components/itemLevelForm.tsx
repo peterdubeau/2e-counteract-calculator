@@ -40,24 +40,34 @@ export default function ItemLevelForm({
         <label className="text-sm font-medium text-foreground">
           {label} {levelOrRank ? (useItemLevel ? "Item Level" : "Spell Rank") : ""}
         </label>
-        <input
-          type="number"
-          value={value === 0 ? '' : value}
-          onChange={(e) => parseValue(e.target.value)}
-          className="w-full h-12 px-4 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg"
-          placeholder="Enter level"
-        />
-      </div>
-      {levelOrRank && (
-        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-          <span className="text-sm font-medium text-foreground">Use Item Level</span>
-          <Switch
-            name="Use Item Level"
-            checked={useItemLevel}
-            onCheckedChange={(e) => handleCheckbox(e)}
+        {levelOrRank ? (
+          <div className="flex gap-2">
+            <input
+              type="number"
+              value={value === 0 ? '' : value}
+              onChange={(e) => parseValue(e.target.value)}
+              className="flex-1 h-12 px-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg min-w-0"
+              placeholder="Enter level"
+            />
+            <div className="flex items-center gap-1 px-2 py-3 bg-muted rounded-lg flex-shrink-0">
+              <span className="text-xs font-medium text-foreground whitespace-nowrap">Item Level</span>
+              <Switch
+                name="Use Item Level"
+                checked={useItemLevel}
+                onCheckedChange={(e) => handleCheckbox(e)}
+              />
+            </div>
+          </div>
+        ) : (
+          <input
+            type="number"
+            value={value === 0 ? '' : value}
+            onChange={(e) => parseValue(e.target.value)}
+            className="w-full h-12 px-4 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg"
+            placeholder="Enter level"
           />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
