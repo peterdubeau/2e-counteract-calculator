@@ -133,7 +133,7 @@ export default function App() {
                 <h3 className="font-semibold text-foreground mb-2">2. Enter Your Roll</h3>
                 <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
                   <li><strong>Counteract DC:</strong> The difficulty class to beat</li>
-                  <li><strong>Counteract Roll:</strong> Your d20 roll result</li>
+                  <li><strong>Counteract Roll:</strong> Your d20 roll result including all modifiers</li>
                 </ul>
               </div>
               
@@ -146,7 +146,7 @@ export default function App() {
                   <li><strong>Critical Success</strong> (target 2-3 levels higher): Roll against DC+10</li>
                   <li><strong>Impossible</strong> (target 4+ levels higher): Cannot be counteracted</li>
                 </ul>
-                <p className="text-muted-foreground mt-2">Click the appropriate button: <strong>"Check Result"</strong> for normal rolls, <strong>"Natural 20"</strong> for critical success, or <strong>"Natural 1"</strong> for critical failure.</p>
+                <p className="text-muted-foreground mt-2">Click the appropriate button: <strong>"Check Result"</strong> for normal rolls, <strong>"Natural 20"</strong>, or <strong>"Natural 1"</strong>.</p>
               </div>
             </div>
           </div>

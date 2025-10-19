@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 
@@ -19,14 +19,24 @@ export default function ItemLevelForm({
   useItemLevel,
   setUseItemLevel,
 }: ItemLevelProps) {
+  const [inputValue, setInputValue] = useState('');
 
-  function parseValue(val: string) {
-    const dcValue = parseInt(val);
-    if (isNaN(dcValue) || val === '') {
+  function handleInputChange(val: string) {
+    setInputValue(val);
+    if (val === '') {
       setValue(0);
     } else {
-      setValue(dcValue);
+      const numValue = parseInt(val);
+      if (isNaN(numValue)) {
+        setValue(0);
+      } else {
+        setValue(numValue);
+      }
     }
+  }
+
+  function getDisplayValue() {
+    return inputValue;
   }
 
   function handleCheckbox(e: any): void {
@@ -44,8 +54,8 @@ export default function ItemLevelForm({
           <div className="flex gap-2">
             <input
               type="number"
-              value={value === 0 ? '' : value}
-              onChange={(e) => parseValue(e.target.value)}
+              value={getDisplayValue()}
+              onChange={(e) => handleInputChange(e.target.value)}
               className="flex-1 h-12 px-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg min-w-0"
               placeholder="Enter level"
             />
@@ -61,8 +71,8 @@ export default function ItemLevelForm({
         ) : (
           <input
             type="number"
-            value={value === 0 ? '' : value}
-            onChange={(e) => parseValue(e.target.value)}
+            value={getDisplayValue()}
+            onChange={(e) => handleInputChange(e.target.value)}
             className="w-full h-12 px-4 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg"
             placeholder="Enter level"
           />
