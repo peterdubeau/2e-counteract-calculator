@@ -102,7 +102,7 @@ export default function App() {
         {/* Header */}
         <div className="text-center">
           <div className="flex items-center justify-center gap-4 mb-2">
-            <h1 className="text-3xl font-bold text-primary">Counteract Calculator</h1>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary">Pathfinder 2e Counteract Check Calculator</h1>
             <Button
               variant="outline"
               size="sm"
@@ -112,7 +112,6 @@ export default function App() {
               {showHelp ? "Hide Help" : "Help"}
             </Button>
           </div>
-          <p className="text-muted-foreground">Pathfinder 2e Counteract Check</p>
         </div>
 
         {/* Help Section */}
