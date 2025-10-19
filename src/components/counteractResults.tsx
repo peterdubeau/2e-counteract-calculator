@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import { SuccessLevel, SuccessLevelDetail } from "../types/index";
+import { Button } from "@/components/ui/button";
 
 type CounteractResultsProps = {
   counteractRoll: number;
@@ -74,35 +74,51 @@ export default function CounteractResults({
   }
 
   return (
-    <>
-      <button
-        onClick={() => handleResult(true, true)}
-        disabled={disableCheckButton}
-        style={{ color: "green" }}
-      >
-        Natural 20
-      </button>
+    <div className="space-y-6">
+      <div className="text-center">
+        <h3 className="text-lg font-semibold text-primary mb-4">Check Result</h3>
+      </div>
+      
+      <div className="grid grid-cols-3 gap-3">
+        <Button
+          onClick={() => handleResult(true, false)}
+          disabled={disableCheckButton}
+          variant="destructive"
+          size="lg"
+          className="h-14 text-sm font-medium"
+        >
+          Natural 1
+        </Button>
+        
+        <Button
+          onClick={() => handleResult()}
+          disabled={disableCheckButton}
+          size="lg"
+          className="h-14 text-sm font-medium"
+        >
+          Check Result
+        </Button>
 
-      <button onClick={() => handleResult()} disabled={disableCheckButton}>
-        Check Counteract Result
-      </button>
+        <Button
+          onClick={() => handleResult(true, true)}
+          disabled={disableCheckButton}
+          variant="secondary"
+          size="lg"
+          className="h-14 text-sm font-medium text-green-400 border-green-400 hover:bg-green-400 hover:text-white"
+        >
+          Natural 20
+        </Button>
+      </div>
 
-      <button
-        onClick={() => handleResult(true, false)}
-        disabled={disableCheckButton}
-        style={{ color: "red" }}
-      >
-        Natural 1
-      </button>
-      {showResults ? (
-        counteractResult ? (
-          <p style={{ color: "green" }}>Success!</p>
-        ) : (
-          <p style={{ color: "red" }}>Failure</p>
-        )
-      ) : (
-        ""
+      {showResults && (
+        <div className="text-center p-4 bg-muted rounded-lg">
+          {counteractResult ? (
+            <p className="text-xl font-bold text-green-400">Success!</p>
+          ) : (
+            <p className="text-xl font-bold text-red-400">Failure</p>
+          )}
+        </div>
       )}
-    </>
+    </div>
   );
 }

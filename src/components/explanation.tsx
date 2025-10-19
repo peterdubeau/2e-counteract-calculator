@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { SuccessLevelDetail } from "../types";
 
 type ExplanationProps = {
@@ -10,6 +10,7 @@ type ExplanationProps = {
   successRequirements: SuccessLevelDetail;
 };
 
+
 export default function Explanation({
   text,
   color,
@@ -18,10 +19,13 @@ export default function Explanation({
   counteractResult,
   successRequirements,
 }: ExplanationProps) {
+  
+  const [higherOrLower, setHigherOrLower] = useState('lower')
+  
   return (
     <p style={{ color: color }}>
       This counteract check was a {counteractResult}
-      The counteracting action was **RANGE** levels **HIGHER/LOWER** than the
+      The counteracting action was **RANGE** levels {higherOrLower} than the
       targeted effect Therefore a {successRequirements.text} roll was required
     </p>
   );

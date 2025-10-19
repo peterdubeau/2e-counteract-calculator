@@ -95,64 +95,75 @@ export default function App() {
   }
 
   return (
-    <div className>
-      <div className>
-        <SuccessRequirementMessage
-          text={successRequirements.text}
-          color={successRequirements.colorValue}
-        />
-      </div>
-      <div className>
-        <div className>
-          <ItemLevelForm
-            value={counteractAttemptLevel}
-            setValue={setCounteractAttemptLevel}
-            label="Counteract"
-            levelOrRank={true}
-            useItemLevel={useItemLevel.attempt}
-            setUseItemLevel={toggleUseItemLevelAttempt}
-          />
-          <ItemLevelForm
-            value={counteractTargetLevel}
-            setValue={setCounteractTargetLevel}
-            label="Counteract Target"
-            levelOrRank={true}
-            useItemLevel={useItemLevel.target}
-            setUseItemLevel={toggleUseItemLevelTarget}
-          />
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-8 space-y-6 sm:space-y-8">
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-primary mb-2">Counteract Calculator</h1>
+          <p className="text-muted-foreground">Pathfinder 2e Counteract Check</p>
         </div>
-      </div>
-      <div className>
-        <div className>
-          <ItemLevelForm
-            value={counteractDC}
-            setValue={setCounteractDC}
-            label="Counteract DC"
-          />
-          <ItemLevelForm
-            value={counteractRoll}
-            setValue={setCounteractRoll}
-            label="Counteract Roll"
-          />
-        </div>
-      </div>
-      <br />
-      <CounteractResults
-        counteractRoll={counteractRoll}
-        counteractDC={counteractDC}
-        successRequirements={successRequirements}
-        successLevel={successLevel}
-        setCounteractResult={setCounteractResult}
-        counteractResult={counteractResult}
-        disableCheckButton={disableCheckButton}
-        showResults={showResults}
-        setShowResults={setShowResults}
-      />
 
-      {/* <Explanation 
-        color="red"
-        text="hello!"
-      /> */}
+        {/* Success Requirement */}
+        <div className="bg-card border border-border rounded-lg p-4">
+          <SuccessRequirementMessage
+            text={successRequirements.text}
+            color={successRequirements.colorValue}
+          />
+        </div>
+
+        {/* Level Inputs */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-card border border-border rounded-lg p-4 space-y-4">
+            <h2 className="text-lg font-semibold text-primary">Levels</h2>
+            <ItemLevelForm
+              value={counteractAttemptLevel}
+              setValue={setCounteractAttemptLevel}
+              label="Counteract"
+              levelOrRank={true}
+              useItemLevel={useItemLevel.attempt}
+              setUseItemLevel={toggleUseItemLevelAttempt}
+            />
+            <ItemLevelForm
+              value={counteractTargetLevel}
+              setValue={setCounteractTargetLevel}
+              label="Counteract Target"
+              levelOrRank={true}
+              useItemLevel={useItemLevel.target}
+              setUseItemLevel={toggleUseItemLevelTarget}
+            />
+          </div>
+
+          {/* DC and Roll Inputs */}
+          <div className="bg-card border border-border rounded-lg p-4 space-y-4">
+            <h2 className="text-lg font-semibold text-primary">Roll & DC</h2>
+            <ItemLevelForm
+              value={counteractDC}
+              setValue={setCounteractDC}
+              label="Counteract DC"
+            />
+            <ItemLevelForm
+              value={counteractRoll}
+              setValue={setCounteractRoll}
+              label="Counteract Roll"
+            />
+          </div>
+        </div>
+
+        {/* Results */}
+        <div className="bg-card border border-border rounded-lg p-4">
+          <CounteractResults
+            counteractRoll={counteractRoll}
+            counteractDC={counteractDC}
+            successRequirements={successRequirements}
+            successLevel={successLevel}
+            setCounteractResult={setCounteractResult}
+            counteractResult={counteractResult}
+            disableCheckButton={disableCheckButton}
+            showResults={showResults}
+            setShowResults={setShowResults}
+          />
+        </div>
+      </div>
     </div>
   );
 }

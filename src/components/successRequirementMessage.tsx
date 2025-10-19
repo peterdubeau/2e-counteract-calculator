@@ -10,9 +10,11 @@ export default function SuccessRequirementMessage({
   text,
 }: SuccessRequirementMessageProps) {
   return (
-    <div className>
-      <p>Minimum Required Result:</p>
-      <p style={{ color: color }}>{text}</p>
+    <div className="text-center space-y-2">
+      <p className="text-sm text-muted-foreground">Minimum Required Result:</p>
+      <p className="text-xl font-bold" style={{ color: color }}>
+        {text}
+      </p>
     </div>
   );
 }
