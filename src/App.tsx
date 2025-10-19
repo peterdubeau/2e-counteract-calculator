@@ -146,7 +146,13 @@ export default function App() {
                   <li><strong>Critical Success</strong> (target 2-3 levels higher): Roll against DC+10</li>
                   <li><strong>Impossible</strong> (target 4+ levels higher): Cannot be counteracted</li>
                 </ul>
-                <p className="text-muted-foreground mt-2">Click the appropriate button: <strong>"Check Result"</strong> for normal rolls, <strong>"Natural 20"</strong>, or <strong>"Natural 1"</strong>.</p>
+                <br />
+                <p className="text-muted-foreground mb-2">Click the appropriate button:</p>
+                <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-4">
+                  <li><strong>"Check Result"</strong> for a roll of 2-19 on your d20</li>
+                  <li><strong>"Natural 20"</strong> for a roll of 20 on your d20</li>
+                  <li><strong>"Natural 1"</strong> for a roll of 1 on your d20</li>
+                </ul>
               </div>
             </div>
           </div>
