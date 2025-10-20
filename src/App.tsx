@@ -34,6 +34,9 @@ export default function App() {
   });
   const [showResults, setShowResults] = useState<boolean>(false)
   const [showHelp, setShowHelp] = useState<boolean>(false)
+  const [showExplanation, setShowExplanation] = useState<boolean>(false)
+  const [isNatural20, setIsNatural20] = useState<boolean>(false)
+  const [isNatural1, setIsNatural1] = useState<boolean>(false)
 
   const [successRequirements, setSuccessRequirements] =
     useState<SuccessLevelDetail>(successLevel.critSuccess);
@@ -61,6 +64,9 @@ export default function App() {
 
   useEffect(() => {
     setShowResults(false)
+    setShowExplanation(false)
+    setIsNatural20(false)
+    setIsNatural1(false)
     if (counteractAttemptLevel === 0 || counteractTargetLevel === 0) {
       setSuccessRequirements(successLevel.none);
     } else {
@@ -217,8 +223,29 @@ export default function App() {
             disableCheckButton={disableCheckButton}
             showResults={showResults}
             setShowResults={setShowResults}
+            setIsNatural20={setIsNatural20}
+            setIsNatural1={setIsNatural1}
+            showExplanation={showExplanation}
+            setShowExplanation={setShowExplanation}
           />
         </div>
+
+        {/* Explanation */}
+        {showExplanation && showResults && (
+          <div className="bg-card border border-border rounded-lg p-4">
+            <Explanation
+              counteractAttemptLevel={counteractAttemptLevel}
+              counteractTargetLevel={counteractTargetLevel}
+              counteractResult={counteractResult}
+              successRequirements={successRequirements}
+              counteractRoll={counteractRoll}
+              counteractDC={counteractDC}
+              useItemLevel={useItemLevel}
+              isNatural20={isNatural20}
+              isNatural1={isNatural1}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

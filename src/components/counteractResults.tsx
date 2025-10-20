@@ -12,6 +12,10 @@ type CounteractResultsProps = {
   disableCheckButton: boolean;
   showResults: boolean;
   setShowResults: any;
+  setIsNatural20: any;
+  setIsNatural1: any;
+  showExplanation: boolean;
+  setShowExplanation: any;
 };
 
 export default function CounteractResults({
@@ -24,54 +28,73 @@ export default function CounteractResults({
   disableCheckButton,
   showResults,
   setShowResults,
+  setIsNatural20,
+  setIsNatural1,
+  showExplanation,
+  setShowExplanation,
 }: CounteractResultsProps) {
   function handleResult(crit?: boolean, isNatural20?: boolean) {
     const { critSuccess, success, failure, impossible } = successLevel;
-    const counteractAttemptTotal = calculateCounteractRoll(crit, isNatural20);
     setShowResults(true);
+    
+    // Set natural roll flags
+    setIsNatural20(isNatural20 || false);
+    setIsNatural1(crit && !isNatural20 || false);
+    
+    // First determine the base result without natural roll effects
+    let baseSuccess = false;
     switch (successRequirements.text) {
       case success.text:
-        if (counteractAttemptTotal >= counteractDC) {
-          setCounteractResult(true);
-        } else {
-          setCounteractResult(false);
-        }
+        baseSuccess = counteractRoll >= counteractDC;
         break;
-
       case critSuccess.text:
-        if (counteractAttemptTotal >= counteractDC + 10) {
-          setCounteractResult(true);
-        } else {
-          setCounteractResult(false);
-        }
+        baseSuccess = counteractRoll >= counteractDC + 10;
         break;
-
       case failure.text:
-        if (counteractAttemptTotal >= counteractDC - 10) {
-          setCounteractResult(true);
-        } else {
-          setCounteractResult(false);
-        }
+        baseSuccess = counteractRoll >= counteractDC - 10;
         break;
-
       case impossible.text:
-        setCounteractResult(false);
+        baseSuccess = false;
         break;
     }
-  }
-
-  function calculateCounteractRoll(
-    crit?: boolean,
-    isNatural20?: boolean
-  ): number {
-    let rollModifier: number = 0;
-
-    if (crit) {
-      rollModifier = isNatural20 ? 10 : -10;
+    
+    // Apply natural roll degree shifts
+    if (isNatural20) {
+      // Natural 20 improves degree of success by 1 step
+      if (successRequirements.text === failure.text) {
+        // Failure → Success
+        setCounteractResult(true);
+      } else if (successRequirements.text === success.text) {
+        // Success → Critical Success (but we can't go higher than required)
+        setCounteractResult(true);
+      } else if (successRequirements.text === critSuccess.text) {
+        // Critical Success → still Critical Success
+        setCounteractResult(baseSuccess);
+      } else {
+        // Impossible stays impossible
+        setCounteractResult(false);
+      }
+    } else if (crit && !isNatural20) {
+      // Natural 1 worsens degree of success by 1 step
+      if (successRequirements.text === critSuccess.text) {
+        // Critical Success → Success
+        setCounteractResult(baseSuccess);
+      } else if (successRequirements.text === success.text) {
+        // Success → Failure
+        setCounteractResult(false);
+      } else if (successRequirements.text === failure.text) {
+        // Failure → Critical Failure (but we can't go lower than required)
+        setCounteractResult(false);
+      } else {
+        // Impossible stays impossible
+        setCounteractResult(false);
+      }
+    } else {
+      // Normal roll - use base result
+      setCounteractResult(baseSuccess);
     }
-
-    return counteractRoll + rollModifier;
   }
+
 
   return (
     <div className="space-y-6">
@@ -111,12 +134,25 @@ export default function CounteractResults({
       </div>
 
       {showResults && (
-        <div className="text-center p-4 bg-muted rounded-lg">
-          {counteractResult ? (
-            <p className="text-xl font-bold text-green-400">Success!</p>
-          ) : (
-            <p className="text-xl font-bold text-red-400">Failure</p>
-          )}
+        <div className="space-y-4">
+          <div className="text-center p-4 bg-muted rounded-lg">
+            {counteractResult ? (
+              <p className="text-xl font-bold text-green-400">Success!</p>
+            ) : (
+              <p className="text-xl font-bold text-red-400">Failure</p>
+            )}
+          </div>
+          
+          <div className="text-center">
+            <Button
+              onClick={() => setShowExplanation(!showExplanation)}
+              variant="outline"
+              size="sm"
+              className="text-sm"
+            >
+              {showExplanation ? "Hide Explanation" : "Show Explanation"}
+            </Button>
+          </div>
         </div>
       )}
     </div>
