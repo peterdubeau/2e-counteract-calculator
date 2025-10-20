@@ -104,7 +104,7 @@ export default function CounteractResults({
           disabled={disableCheckButton}
           variant="secondary"
           size="lg"
-          className="h-14 text-sm font-medium text-green-400 border-green-400 hover:bg-green-400 hover:text-white"
+          className="h-14 text-sm font-medium bg-green-400 text-white border-green-400 hover:bg-green-500 hover:text-white"
         >
           Natural 20
         </Button>

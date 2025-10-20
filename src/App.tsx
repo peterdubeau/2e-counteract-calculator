@@ -168,7 +168,7 @@ export default function App() {
         {/* Level Inputs */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-card border border-border rounded-lg p-4 space-y-4">
-            <h2 className="text-lg font-semibold text-primary">Levels</h2>
+            <h2 className="text-lg font-semibold text-primary">Item or Spell Information</h2>
             <ItemLevelForm
               value={counteractAttemptLevel}
               setValue={setCounteractAttemptLevel}
@@ -194,11 +194,13 @@ export default function App() {
               value={counteractDC}
               setValue={setCounteractDC}
               label="Counteract DC"
+              placeholder="Enter DC"
             />
             <ItemLevelForm
               value={counteractRoll}
               setValue={setCounteractRoll}
-              label="Counteract Roll"
+              label="Counteract Roll (d20 + modifiers)"
+              placeholder="Enter d20 result + any modifiers"
             />
           </div>
         </div>
